@@ -11,6 +11,8 @@ export class FaceSnapComponent implements OnInit {
   createDate!: Date;
   snaps!: number;
   imageUrl!: string;
+  snapped!: boolean;
+  buttonText!: string;
 
   ngOnInit() {
     this.title = 'Demo';
@@ -18,9 +20,20 @@ export class FaceSnapComponent implements OnInit {
     this.createDate = new Date();
     this.snaps = 5;
     this.imageUrl = 'https://cdn.pixabay.com/photo/2015/05/31/16/03/teddy-bear-792273_1280.jpg';
+    this.snapped = false;
+    this.buttonText = 'Snap !';
   }
 
-  onAddSnap() {
-    this.snaps ++;
+  onClickSnap() {
+    if (this.snapped === false) {
+      this.snaps++;
+      this.buttonText = 'Oops, un Snap!';
+      this.snapped = true;
+    }
+    else {
+      this.snaps--;
+      this.buttonText = 'Snap!';
+      this.snapped = false;
+    }
   }
 }
