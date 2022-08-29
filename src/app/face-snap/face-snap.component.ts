@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 import {FaceSnap} from '../models/face-snap.model';
 import {FaceSnapsService} from "../services/face-snaps.service";
 
@@ -8,9 +9,8 @@ import {FaceSnapsService} from "../services/face-snaps.service";
   styleUrls: ['./face-snap.component.scss']
 })
 export class FaceSnapComponent implements OnInit {
-  constructor(private faceSnapsService: FaceSnapsService) {
-
-  }
+  constructor(private faceSnapsService: FaceSnapsService,
+              private router: Router) {}
 
   @Input() faceSnap!: FaceSnap;
   snapped!: boolean;
@@ -21,15 +21,19 @@ export class FaceSnapComponent implements OnInit {
     this.buttonText = 'Snap !';
   }
 
-  onClickSnap() {
-    if (this.snapped === false) {
-      this.faceSnapsService.snapFaceSnapById(this.faceSnap.id, 'snap');
-      this.buttonText = 'Oops, un Snap!';
-      this.snapped = true;
-    } else {
-      this.faceSnapsService.snapFaceSnapById(this.faceSnap.id, 'unsnap');
-      this.buttonText = 'Snap!';
-      this.snapped = false;
-    }
+  // onClickSnap() {
+  //   if (this.snapped === false) {
+  //     this.faceSnapsService.snapFaceSnapById(this.faceSnap.id, 'snap');
+  //     this.buttonText = 'Oops, un Snap!';
+  //     this.snapped = true;
+  //   } else {
+  //     this.faceSnapsService.snapFaceSnapById(this.faceSnap.id, 'unsnap');
+  //     this.buttonText = 'Snap!';
+  //     this.snapped = false;
+  //   }
+  // }
+
+  onViewFaceSnap() {
+    this.router.navigateByUrl(`facesnaps/${this.faceSnap.id}`);
   }
 }
