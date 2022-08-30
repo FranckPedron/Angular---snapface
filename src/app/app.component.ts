@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {FaceSnap} from "./models/face-snap.model";
 
 @Component({
   selector: 'app-root',
@@ -7,9 +6,7 @@ import {FaceSnap} from "./models/face-snap.model";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  faceSnaps!: FaceSnap[];
 
-  ngOnInit() {
+  ngOnInit() {}
 
-  }
 }
