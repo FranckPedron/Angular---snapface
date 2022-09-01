@@ -52,4 +52,13 @@ export class FaceSnapsService {
     snapType === 'snap' ? faceSnap.snaps++ : faceSnap.snaps--;
   };
 
+  addFaceSnap(formValue: {title: string, description: string, imageUrl: string, location?: string}) {
+    const faceSnap: FaceSnap = {
+      ...formValue,
+      id: this.faceSnaps[this.faceSnaps.length - 1].id + 1,
+      createdDate: new Date(),
+      snaps: 0
+    };
+    this.faceSnaps.push(faceSnap);
+  }
 }
