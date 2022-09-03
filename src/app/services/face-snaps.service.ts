@@ -8,7 +8,8 @@ import {map, Observable, switchMap} from "rxjs";
 })
 export class FaceSnapsService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
 
   getAllFaceSnaps(): Observable<FaceSnap[]> {
@@ -29,14 +30,17 @@ export class FaceSnapsService {
     );
   };
 
-  addFaceSnap(formValue: { title: string, description: string, imageUrl: string, location?: string }) {
-
-    // const faceSnap: FaceSnap = {
-    //   ...formValue,
-    //   id: this.faceSnaps[this.faceSnaps.length - 1].id + 1,
-    //   createdDate: new Date(),
-    //   snaps: 0
-    // };
-    // this.faceSnaps.push(faceSnap);
+  addFaceSnap(formValue: { title: string, description: string, imageUrl: string, location?: string }): Observable<FaceSnap> {
+    return this.getAllFaceSnaps().pipe(
+      map(facesnaps => [...facesnaps].sort((a, b) => a.id - b.id)),
+      map(sortedFacesnaps => sortedFacesnaps[sortedFacesnaps.length - 1]),
+      map(previousFacesnap => ({
+        ...formValue,
+        id: previousFacesnap.id + 1,
+        snaps: 0,
+        createdDate: new Date()
+      })),
+      switchMap(newFacesnap => this.http.post<FaceSnap>('http://localhost:3000/facesnaps', newFacesnap))
+    );
   }
 }
